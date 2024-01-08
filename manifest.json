@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "linkedin-wall-filter",
+  "version": "1.0",
+
+  "description": "Adds a linkedin wall filter by tags and words",
+
+  "icons": {
+    "48": "icons/linkedin-wall-filter-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["linkedin-wall-filter.js"]
+    }
+  ]
+}
