@@ -1,6 +1,12 @@
 # linkedin-wall-filter
 Filter wall by tags, words, phrase
 
+It's possible on different ways:
++ by SaaS using API
++ by plugin
+  + uBlock + [config file](ublock.txt)
+  + feed filter
+
 [firefox plugin](https://extensionworkshop.com/documentation/publish/submitting-an-add-on/#self-distribution)
 
 ![filter](screen/filter1.png)
