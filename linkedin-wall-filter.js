@@ -129,7 +129,7 @@
         //const posts = document.querySelectorAll('.scaffold-finite-scroll .feed-shared-inline-show-more-text > [dir="ltr"]');
 
         let posts = document.querySelectorAll('[data-id]');
-        console.log("posts.length", posts.length, lastPostCount);
+        //console.log("posts.length", posts.length, lastPostCount);
 
         // Selector updated to 'article' to represent a generic post
         var filter_enabled = (lastPostCount == 0 || posts.length !== lastPostCount);
@@ -144,7 +144,7 @@
                 if (postText.length > 2) {
                     //let shouldHidePost = blacklist.some(keyword => postText.includes(keyword));
                     let shouldHidePost = stringIncludesKeywords(postText,blacklist)
-                    console.log("shouldHidePost", shouldHidePost)
+                    //console.log("shouldHidePost", shouldHidePost)
                     //post.style.display = shouldHidePost ? 'none' : ''; // Hide or show post based on the blacklist
                     post.style.border = shouldHidePost ? '1px solid orange' : '1px solid gray';
 
