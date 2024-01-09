@@ -1,6 +1,7 @@
 # linkedin-wall-filter
 Filter wall by tags, words, phrase
 
+![filter](screen/filter1.png)
 
 ## testing
 
