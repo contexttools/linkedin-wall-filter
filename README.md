@@ -9,7 +9,15 @@ It's possible on different ways:
 
 [firefox plugin](https://extensionworkshop.com/documentation/publish/submitting-an-add-on/#self-distribution)
 
+
 ![filter](screen/filter1.png)
+
+
+## uBlock
+
++ [adfilt/Wiki/SyntaxMeaningsThatAreActuallyHumanReadable.md at master · DandelionSprout/adfilt](https://github.com/DandelionSprout/adfilt/blob/master/Wiki/SyntaxMeaningsThatAreActuallyHumanReadable.md)
+
+
 
 ## testing
 
@@ -48,3 +56,5 @@ https://addons.mozilla.org/en-US/developers/
 https://extensionworkshop.com/documentation/manage/updating-your-extension/
 
 https://extensionworkshop.com/documentation/publish/submitting-an-add-on/#self-distribution
+
+[Signing and distribution overview - Firefox Extension Workshop](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/)
