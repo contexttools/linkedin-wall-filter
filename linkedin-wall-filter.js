@@ -37,6 +37,12 @@
         lastTextareaValue = textareaValue; // Update the last known state
     }
 
+    function htmlToText(htmlString) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(htmlString, 'text/html');
+        return doc.body.textContent || "";
+    }
+
     // Create a textarea at the bottom of the page
     let blacklistTextarea = document.createElement('textarea');
     blacklistTextarea.id = 'blacklist-textarea';
@@ -83,6 +89,38 @@
         blacklistTextarea.value = decodeURIComponent(savedKeywords);
     }
 
+    function beforeChild(parentElement, newChild) {
+        // Check if the parent has any child nodes
+        if (parentElement.firstChild) {
+            // If there's a first child, insert the new node before this first child
+            parentElement.insertBefore(newChild, parentElement.firstChild);
+        } else {
+            // If there are no children, just append the new child
+            parentElement.appendChild(newChild);
+        }
+    }
+    function stringIncludesKeywords(str, keywords) {
+        // Loop through the array of keywords
+        for (let keyword of keywords) {
+            // Check if the string includes the current keyword
+            if (str.includes(keyword)) {
+                console.log("keyword",keyword)
+                return true; // If found, return true immediately
+            }
+        }
+        return false; // If none of the keywords are found, return false
+    }
+    function stringIncludesKeywordsArr(str, keywords, arr=[]) {
+        // Loop through the array of keywords
+        for (let keyword of keywords) {
+            // Check if the string includes the current keyword
+            if (str.includes(keyword)) {
+                console.log("keyword",keyword)
+                arr.push(keyword)
+            }
+        }
+        return arr; // If none of the keywords are found, return false
+    }
 
     // Function to filter posts against list of keywords
     const filterPostsByKeywords = (blacklist) => {
@@ -104,7 +142,8 @@
                 //console.log("postText", postText)
 
                 if (postText.length > 2) {
-                    let shouldHidePost = blacklist.some(keyword => postText.includes(keyword));
+                    //let shouldHidePost = blacklist.some(keyword => postText.includes(keyword));
+                    let shouldHidePost = stringIncludesKeywords(postText,blacklist)
                     console.log("shouldHidePost", shouldHidePost)
                     //post.style.display = shouldHidePost ? 'none' : ''; // Hide or show post based on the blacklist
                     post.style.border = shouldHidePost ? '1px solid orange' : '1px solid gray';
@@ -120,16 +159,17 @@
                         let keywords = blacklistTextarea.value.split(',').map(word => word.trim().toLowerCase());
                         // Get the text to search in - replace this with the actual source of your target text
                         let searchText = postText.toLowerCase();
-
+/*
                         // Count occurrences and list them
                         let results = keywords.reduce((acc, keyword) => {
                             let count = (searchText.match(new RegExp('\\b' + keyword + '\\b', 'g')) || []).length;
+                            console.log(keyword, count)
                             if (count > 0) {
                                 acc[keyword] = (acc[keyword] || 0) + count;
                             }
                             return acc;
                         }, {});
-
+*/
 
                         //postNode.insertBefore(postNode.lastElementChild, blacklistUl);
 
@@ -139,7 +179,7 @@
                         post.addEventListener("click", function (event) {
                             console.log("clicked");
                             //console.log(this);
-                            this.style.height = '100%';
+                            this.style.height = '120%';
                             //this.style.visibility = 'visible';
                             var postHeader = this.querySelector('.update-components-actor');
                             if (undefined !== typeof postHeader) {
@@ -164,22 +204,52 @@
                         }
 
 
-                        let blacklistUl = document.createElement('div');
 
-                        let htmlKeywords = Object.keys(results).map(word => sanitize(word)).join(' ');
-                        blacklistUl.innerHTML = htmlKeywords;
-                        // blacklistUl.innerHTML = Object.keys(results).map(word => `${word}`).join(' ');
+
+                        //let htmlKeywords = Object.keys(results).map(word => htmlToText(word)).join(' ');
+                        //let textKeywords = Object.keys(results).map(word => sanitize(word)).join(' ');
+                        //let textKeywords = Object.keys(results).map(word =>  `${word}`).join(' ');
+                        //let textKeywords = Object.keys(results).map(word => `${word}`).join('');
+
+                        //blacklistUl.innerText = sanitize(htmlKeywords);
+                        //blacklistUl.innerText = "NOT:" + textKeywords;
+                        /*
+                        for (let keyword of keywords) {
+                            console.log(keyword);
+                            let counter = (searchText.match(new RegExp('\\b' + keyword + '\\b', 'g')) || []).length;
+                            if (counter > 0) {
+                                console.log("keyword", keyword);
+                                let blacklistUl = document.createElement('h2');
+                                blacklistUl.innerText += "NOT: " + keyword;
+                                blacklistUl.style.color = "orange";
+                                blacklistUl.style.height = "20px";
+                                let postNodeList = post.closest('div.relative');
+                                //postNodeList.appendChild(blacklistUl);
+                                beforeChild(postNodeList, blacklistUl)
+                            }
+                        }
+                        */
+                        let blacklistUl = document.createElement('h5');
+                        blacklistUl.innerText += "! " + stringIncludesKeywordsArr(postText,blacklist, []).join(' ');
+                        blacklistUl.style.color = "orange";
+                        blacklistUl.style.fontSize = "smaller";
+                        //blacklistUl.style.height = "20px";
+                        let postNodeList = post.closest('div.relative');
+                        //postNodeList.appendChild(blacklistUl);
+                        beforeChild(postNodeList, blacklistUl)
+
+                        //blacklistUl.innerText = "NOT: " + textKeywords;
+                        //blacklistUl.innerHTML = textKeywords;
+                        //blacklistUl.innerText = Object.keys(results).map(word => `${word}`).join(' ');
                         //blacklistUl.innerHTML = Object.keys(results).map(word => `${word}(${results[word]}) `).join('');
                         //blacklistUl.style.font = "normal 12px orange";
-                        blacklistUl.style.color = "orange";
 
 
-                        let postNodeList = post.closest('div');
-                        postNodeList.appendChild(blacklistUl);
+
 
                         //let postNodeLast = postNodeList.lastElementChild;
-                        let postNodeFirst = postNodeList.firstElementChild;
-                        postNodeList.insertBefore(postNodeFirst, null);
+                        //let postNodeFirst = postNodeList.firstElementChild;
+                        //postNodeList.insertBefore(postNodeFirst, null);
 
 
                     }
