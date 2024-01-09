@@ -91,7 +91,8 @@
         var blocked = 0
         var notBlocked = 0
             //const posts = document.querySelectorAll('.scaffold-finite-scroll .feed-shared-inline-show-more-text > [dir="ltr"]');
-        const posts = document.querySelectorAll('[data-id]');
+            
+        let posts = document.querySelectorAll('[data-id]');
         console.log("posts.length",posts.length, lastPostCount);
         
         // Selector updated to 'article' to represent a generic post
@@ -105,10 +106,10 @@
                 //console.log("postText", postText)
                 
                 if(postText.length>2){
-                    const shouldHidePost = blacklist.some(keyword => postText.includes(keyword));
+                    let shouldHidePost = blacklist.some(keyword => postText.includes(keyword));
                     console.log("shouldHidePost", shouldHidePost)
                     //post.style.display = shouldHidePost ? 'none' : ''; // Hide or show post based on the blacklist
-                    post.style.border = shouldHidePost ? '1px solid orange' : '0px solid gray';
+                    post.style.border = shouldHidePost ? '1px solid orange' : '1px solid gray';
                     
                     
                     
@@ -126,36 +127,28 @@
                         // Count occurrences and list them
                         let results = keywords.reduce((acc, keyword) => {
                             let count = (searchText.match(new RegExp('\\b' + keyword + '\\b', 'g')) || []).length;
-                            if (count > 1) {
+                            if (count > 0) {
                                 acc[keyword] = (acc[keyword] || 0) + count;
                             }
                             return acc;
                         }, {});
                         
                             
-                        let blacklistUl = document.createElement('div');                        
-                        //blacklistUl.innerHTML = Object.keys(results).map(word => `${word}(${results[word]}) `).join('');
-                        blacklistUl.innerHTML = Object.keys(results).map(word => `${word}`).join(' ');
-                        //blacklistUl.style.font = "normal 12px orange";
-                        blacklistUl.style.color = "orange";
-                        
-                        
-                        const postNodeList = post.closest('div');
-                        const postNodeLast = postNodeList.lastElementChild;  
-                        
-                        postNodeList.appendChild(blacklistUl);  
-                        postNodeList.insertBefore(postNodeLast, null);
                                             
                         //postNode.insertBefore(postNode.lastElementChild, blacklistUl);
                             
-                        post.style.height = '90px'; // Hide or show post based on the blacklist
+                        post.style.height = '100px'; // Hide or show post based on the blacklist
+                        //post.style.visibility = 'hidden';  
+                        
                         post.addEventListener("click", function(event) {
                             console.log("clicked");
                             //console.log(this);
                             this.style.height = '100%';                                
-                            this.style.visibility = 'visible';                            
+                            //this.style.visibility = 'visible';                            
                             var postHeader = this.querySelector('.update-components-actor');
-                            postHeader.style.visibility = 'visible';
+                            if (undefined !== typeof postHeader ) {                            
+                                postHeader.style.visibility = 'visible';
+                            }
                         }, false); //event handler
                             
                         //var postHeader = post.closest('.update-components-actor');
@@ -164,7 +157,7 @@
                         if (null !== postHeader && "object" === typeof postHeader) {
                             postHeader.style.height = '1px';
                             postHeader.style.visibility = 'hidden';
-                            postHeader.style.border = '1px solid orange';
+                            //postHeader.style.border = '1px solid orange';
                             //postHeader.style.color = '#CACACA';                            
                             //postHeader.style.cssText = 'color:#CACACA !important';
                             //postHeader.setAttribute('style', 'color:#CACACA !important');
@@ -173,13 +166,32 @@
                             //postHeader.style.padding = "0 0 0 0";    
                            
                         }
+                        
+                        
+                        let blacklistUl = document.createElement('div');                        
+                        //blacklistUl.innerHTML = Object.keys(results).map(word => `${word}(${results[word]}) `).join('');
+                        blacklistUl.innerHTML = Object.keys(results).map(word => `${word}`).join(' ');
+                        //blacklistUl.style.font = "normal 12px orange";
+                        blacklistUl.style.color = "orange";
+                        
+                        
+                        
+                        let postNodeList = post.closest('div');
+                        postNodeList.appendChild(blacklistUl);
+                        
+                        //let postNodeLast = postNodeList.lastElementChild;
+                        let postNodeFirst = postNodeList.firstElementChild; 
+                        postNodeList.insertBefore(postNodeFirst, null);
+                        
+                        
+                        
                     }
                     
                     shouldHidePost? blocked++ : notBlocked++;
                 }
             });
         }
-        console.log("blocked " ,blocked, notBlocked);
+        //console.log("blocked " ,blocked, notBlocked);
     };
 
     
