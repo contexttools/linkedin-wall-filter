@@ -1,6 +1,8 @@
 # linkedin-wall-filter
 Filter wall by tags, words, phrase
 
+[firefox plugin](https://extensionworkshop.com/documentation/publish/submitting-an-add-on/#self-distribution)
+
 ![filter](screen/filter1.png)
 
 ## testing
