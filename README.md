@@ -31,7 +31,11 @@ web-ext build --overwrite-dest
 
 ##  publish
 
+https://support.mozilla.org/pl/kb/zabezpiecz-konto-mozilli-dwuetapowe-uwierzytelnienie
+
 https://addons.mozilla.org/en-US/developers/
 
 
 https://extensionworkshop.com/documentation/manage/updating-your-extension/
+
+https://extensionworkshop.com/documentation/publish/submitting-an-add-on/#self-distribution
