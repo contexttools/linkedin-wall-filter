@@ -26,5 +26,12 @@ web-ext run
 Once you've tested your extension and verified that it's working, you can turn it into a package for submitting to addons.mozilla.org using the following command:
 
 ```bash
-web-ext build
+web-ext build --overwrite-dest 
 ```
+
+##  publish
+
+https://addons.mozilla.org/en-US/developers/
+
+
+https://extensionworkshop.com/documentation/manage/updating-your-extension/
